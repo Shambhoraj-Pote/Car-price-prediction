@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>AI Car Price Prediction</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		<script src="https://cdn.tailwindcss.com"></script>
+		<link rel="icon" href="/static/logo.svg">
+		<style>
+			:root { color-scheme: light dark; }
+			html, body { height: 100%; }
+			body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+			.card { backdrop-filter: blur(8px); }
+		</style>
+	</head>
+	<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+		<header class="w-full border-b border-slate-200/70 dark:border-slate-800">
+			<div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+				<div class="flex items-center gap-3">
+					<img src="/static/logo.svg" alt="Logo" class="w-8 h-8">
+					<h1 class="text-xl font-semibold">CarVision Price AI</h1>
+				</div>
+				<div class="text-sm text-slate-500 dark:text-slate-400">Real‑time image-based valuation</div>
+			</div>
+		</header>
+
+		<main class="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+			<section class="lg:col-span-7 space-y-4">
+				<div class="card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/40">
+					<h2 class="text-lg font-semibold mb-3">Camera</h2>
+					<div class="relative rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
+						<video id="video" autoplay playsinline class="w-full aspect-video bg-black"></video>
+						<canvas id="canvas" class="hidden"></canvas>
+						<img id="snapshot" class="hidden absolute inset-0 w-full h-full object-contain bg-black" alt="snapshot preview" />
+						<button id="snap" class="absolute bottom-4 right-36 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg shadow">
+							Capture & Predict
+						</button>
+						<button id="resetImage" class="absolute bottom-4 right-4 px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg shadow hidden">Reset image</button>
+					</div>
+					<div class="mt-3 flex items-center gap-3">
+						<label class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-900">
+							<input type="file" id="file" accept="image/*" class="hidden">
+							Upload image
+						</label>
+						<span class="text-xs text-slate-500">or use your webcam above</span>
+					</div>
+				</div>
+
+				<div class="card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/40">
+					<h2 class="text-lg font-semibold mb-3">Adjustments </h2>
+					<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+						<div>
+							<label class="text-sm text-slate-600 dark:text-slate-400">Mileage (km)</label>
+							<input id="mileage" type="number" min="0" step="1000" required placeholder="e.g. 15" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60">
+						</div>
+						<div>
+							<label class="text-sm text-slate-600 dark:text-slate-400">Year</label>
+							<input id="year" type="number" min="1990" max="2026" required placeholder="e.g. 2019" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60">
+						</div>
+						<div>
+							<label class="text-sm text-slate-600 dark:text-slate-400">Condition</label>
+							<input id="condition" type="range" min="1" max="5" value="3" class="mt-2 w-full">
+						</div>
+						<div>
+							<label class="text-sm text-slate-600 dark:text-slate-400">Engine size (cc)</label>
+							<input id="engine_cc" type="number" min="600" max="6000" step="100" required placeholder="e.g. 1498" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60">
+						</div>
+						<div>
+							<label class="text-sm text-slate-600 dark:text-slate-400">Seats</label>
+							<input id="seats" type="number" min="2" max="9" step="1" required placeholder="e.g. 5" class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60">
+						</div>
+						<div>
+							<label class="text-sm text-slate-600 dark:text-slate-400">Brand</label>
+							<select id="brand" required class="mt-1 w-full px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60">
+								<option value="">Select brand</option>
+								<option>Maruti</option>
+								<option>Hyundai</option>
+								<option>Honda</option>
+								<option>Toyota</option>
+								<option>Tata</option>
+								<option>Mahindra</option>
+								<option>Skoda</option>
+								<option>Volkswagen</option>
+								<option>BMW</option>
+								<option>Mercedes</option>
+								<option>Audi</option>
+								<option>Kia</option>
+								<option>MG</option>
+								<option>Renault</option>
+								<option>Nissan</option>
+								<option>Jeep</option>
+								<option>Land Rover</option>
+							</select>
+						</div>
+					</div>
+					
+				</div>
+			</section>
+
+			<aside class="lg:col-span-5 space-y-4">
+				<div class="card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/40">
+					<h2 class="text-lg font-semibold mb-3">Prediction (INR)</h2>
+					<div id="result" class="text-3xl font-bold">₹—</div>
+					<div id="confidence" class="mt-1 text-sm text-slate-500">Confidence: —</div>
+					<div id="attributes" class="mt-2 text-xs text-slate-500"></div>
+					<div class="mt-4 flex gap-2">
+						<button id="save" class="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900">Save</button>
+						<button id="share" class="px-3 py-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-500">Share</button>
+					</div>
+				</div>
+
+				<div class="card rounded-2xl p-5 border border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/40">
+					<h2 class="text-lg font-semibold mb-3">History & Compare</h2>
+					<ul id="history" class="space-y-3"></ul>
+				</div>
+			</aside>
+		</main>
+
+		<footer class="max-w-6xl mx-auto px-4 py-6 text-xs text-slate-500">
+			Built with FastAPI 
+		</footer>
+
+		<script src="/static/main.js" type="module"></script>
+	</body>
+	</html>
+
+

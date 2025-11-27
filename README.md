@@ -1,4 +1,4 @@
-## CarVision Price AI
+## Car Price AI
 
 Real-time, image-based car price estimation with a FastAPI backend (ResNet18 embeddings + lightweight regressor head) and a professional single-page UI that supports webcam capture, image uploads, history, and sharing.
 
